@@ -4,9 +4,8 @@ from sklearn.linear_model import LinearRegression,Ridge ,Lasso
 from sklearn.preprocessing import StandardScaler ,PolynomialFeatures , OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import make_column_transformer
-from category_encoders import BinaryEncoder
 from sklearn.metrics import mean_squared_error
-from Test_2 import df
+from Ingest_clean import df
 
 
 def main(model, param_grid, X_train, X_test, y_train, y_test):
@@ -91,17 +90,6 @@ def hyper_param(Linear_reg, ridge_reg, lasso_reg):
     }
     lasso_reg = main(lasso_reg, param_grid, X_train, X_test, y_train, y_test)
     return lasso_reg, ridge_reg, linear_reg
-
-features = df.columns.drop(['Price'])
-target = 'Price'
-
-X = df[features]
-y = df[target]
-
-num_features = X.select_dtypes('number').columns
-cat_features = X.select_dtypes('object').columns
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 Linear_reg, ridge_reg, lasso_reg, cat_pipeline, num_pipeline = pipe_line()
 lasso_reg, ridge_reg, linear_reg = hyper_param(Linear_reg, ridge_reg, lasso_reg)

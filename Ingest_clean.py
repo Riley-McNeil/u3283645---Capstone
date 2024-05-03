@@ -13,7 +13,7 @@ print(df.info())
 print(round((df.isna().sum() / len(df)) * 100, 2))
 
 # drops columns from the dataframe that are not used
-df.drop(columns=['Unnamed: 0', 'Price'], inplace=True)
+df.drop(columns=['Unnamed: 0', 'New_Price'], inplace=True)
 
 # Check/remove duplicates
 print(df.duplicated().sum())
@@ -35,7 +35,7 @@ print(df.describe())
 print(df.select_dtypes('object').describe())
 
 # remove outliers for columns listed
-for col in ['Engine', 'Power', 'Kilometers_Driven', 'Mileage', 'new_Price']:
+for col in ['Engine', 'Power', 'Kilometers_Driven', 'Mileage', 'Price']:
     quantity1 = df[col].quantile(0.25)
     quantity3 = df[col].quantile(0.75)
     IQR = quantity3 - quantity1
@@ -88,5 +88,6 @@ df = df[~df['Model'].isin(to_drop)]
 print(df.head())
 
 plt.figure(figsize=(10,6))
-sns.heatmap(df.corr(),annot=True,cmap='Blues');
-
+sns.heatmap(df.corr(), annot=True, cmap='Blues')
+plt.title('Correlation Heatmap')
+plt.show()
